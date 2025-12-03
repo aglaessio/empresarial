@@ -1,0 +1,2077 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STI – Soluções Técnicas Integradas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0056A6;
+            --primary-dark: #003d7a;
+            --secondary: #4A4A4A;
+            --accent: #00A86B;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+            
+            /* Variáveis para tema claro (default) */
+            --bg-color: #f5f7fa;
+            --text-color: #4A4A4A;
+            --section-bg: white;
+            --card-bg: #f8f9fa;
+            --header-bg: linear-gradient(135deg, #0056A6, #003d7a);
+            --footer-bg: #4A4A4A;
+            --border-color: #eaeaea;
+            --table-header-bg: #f2f2f2;
+            --table-row-hover: #f5f5f5;
+            --highlight-bg: #f0f8ff;
+            --guidelines-bg: #f8f9fa;
+            --material-card-bg: white;
+            --progress-bg: #e9ecef;
+        }
+        
+        /* Variáveis para tema escuro */
+        .dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --section-bg: #1e1e1e;
+            --card-bg: #252525;
+            --header-bg: linear-gradient(135deg, #003d7a, #002550);
+            --footer-bg: #2d2d2d;
+            --border-color: #444;
+            --table-header-bg: #2d2d2d;
+            --table-row-hover: #333;
+            --highlight-bg: #1a237e;
+            --guidelines-bg: #252525;
+            --material-card-bg: #2a2a2a;
+            --progress-bg: #333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--bg-color);
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header - Responsividade Aprimorada */
+        header {
+            background: var(--header-bg);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background 0.3s;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .logo-img {
+            height: 50px;
+            width: auto;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+            max-height: 60px;
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        
+        .logo-text h1 {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            font-weight: 700;
+            color: white;
+            margin: 0;
+            line-height: 1.2;
+        }
+        
+        .logo-text p {
+            font-size: clamp(0.75rem, 2vw, 0.9rem);
+            opacity: 0.9;
+            font-weight: 300;
+            color: white;
+            margin: 0;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: clamp(10px, 2vw, 25px);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 8px 5px;
+            position: relative;
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            white-space: nowrap;
+        }
+        
+        nav a:hover {
+            color: #ffffff;
+            opacity: 0.9;
+        }
+        
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--accent);
+            border-radius: 3px;
+        }
+        
+        /* Botão de Tema */
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+        
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(30deg);
+        }
+        
+        .theme-toggle .fa-sun {
+            display: none;
+        }
+        
+        .dark-mode .theme-toggle .fa-moon {
+            display: none;
+        }
+        
+        .dark-mode .theme-toggle .fa-sun {
+            display: block;
+        }
+        
+        .menu-toggle {
+            display: none;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            width: 45px;
+            height: 45px;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Hero - Responsividade Aprimorada */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            padding: clamp(3rem, 8vw, 5rem) 0;
+            text-align: center;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero .container {
+            width: 90%;
+            max-width: 1000px;
+        }
+        
+        .hero h2 {
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            margin-bottom: clamp(1rem, 3vw, 1.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            max-width: 800px;
+            margin: 0 auto clamp(1.5rem, 4vw, 2rem);
+            opacity: 0.9;
+            font-weight: 300;
+            line-height: 1.5;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: clamp(10px, 2vw, 12px) clamp(20px, 4vw, 30px);
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            width: auto;
+            min-width: 200px;
+        }
+        
+        .cta-button:hover {
+            background-color: #008f55;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Main Content */
+        main {
+            padding: clamp(2rem, 5vw, 3rem) 0;
+        }
+        
+        .section {
+            background-color: var(--section-bg);
+            border-radius: var(--border-radius);
+            padding: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: clamp(1.5rem, 3vw, 2rem);
+            box-shadow: var(--shadow);
+            width: 100%;
+            overflow: hidden;
+            transition: background-color 0.3s;
+        }
+        
+        .section h2 {
+            color: var(--primary);
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: clamp(1.3rem, 3vw, 1.6rem);
+        }
+        
+        .section h2 i {
+            color: var(--primary);
+            font-size: clamp(1.2rem, 3vw, 1.4rem);
+        }
+        
+        .section h3 {
+            color: var(--text-color);
+            margin: 1.25rem 0 1rem;
+            font-weight: 600;
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            transition: color 0.3s;
+        }
+        
+        .section p {
+            margin-bottom: 1rem;
+            font-size: clamp(0.95rem, 2vw, 1rem);
+            transition: color 0.3s;
+        }
+        
+        ul {
+            padding-left: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+            font-size: clamp(0.95rem, 2vw, 1rem);
+            transition: color 0.3s;
+        }
+        
+        .highlight {
+            background-color: var(--highlight-bg);
+            padding: clamp(1rem, 3vw, 1.5rem);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--primary);
+            margin: 1.5rem 0;
+            transition: background-color 0.3s;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+            gap: clamp(1rem, 3vw, 1.5rem);
+            margin-top: 1.5rem;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: clamp(1.25rem, 3vw, 1.5rem);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            border-top: 3px solid var(--primary);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card h4 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+        }
+        
+        .card-icon {
+            background-color: var(--primary);
+            color: white;
+            width: clamp(35px, 4vw, 40px);
+            height: clamp(35px, 4vw, 40px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        
+        /* Table - Responsividade Aprimorada */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        
+        th, td {
+            padding: clamp(8px, 2vw, 12px) clamp(10px, 2vw, 15px);
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            transition: color 0.3s, border-color 0.3s;
+        }
+        
+        th {
+            background-color: var(--table-header-bg);
+            color: var(--primary);
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        tr:hover {
+            background-color: var(--table-row-hover);
+            transition: background-color 0.3s;
+        }
+        
+        /* Timeline - Responsividade Aprimorada */
+        .timeline {
+            position: relative;
+            max-width: 100%;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            padding: clamp(15px, 3vw, 20px);
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: background-color 0.3s;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--section-bg);
+            border: 4px solid var(--primary);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+            transition: background-color 0.3s;
+        }
+        
+        .timeline-item:nth-child(odd)::after {
+            right: -10px;
+        }
+        
+        .timeline-item:nth-child(even)::after {
+            left: -10px;
+        }
+        
+        /* Footer - Responsividade Aprimorada */
+        footer {
+            background-color: var(--footer-bg);
+            color: white;
+            padding: clamp(2rem, 5vw, 3rem) 0 clamp(1rem, 3vw, 1.5rem);
+            transition: background-color 0.3s;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+            gap: clamp(1.5rem, 4vw, 2rem);
+            margin-bottom: clamp(1.5rem, 3vw, 2rem);
+        }
+        
+        .footer-section h3 {
+            color: white;
+            margin-bottom: 1.25rem;
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            font-weight: 600;
+        }
+        
+        .footer-section p {
+            margin-bottom: 0.75rem;
+            opacity: 0.8;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        
+        .contact-item i {
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+        }
+        
+        /* Tabs - Responsividade Aprimorada */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 5px;
+            transition: border-color 0.3s;
+        }
+        
+        .tab-button {
+            padding: clamp(8px, 2vw, 10px) clamp(12px, 2vw, 20px);
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-weight: 600;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+            white-space: nowrap;
+            flex: 1;
+            min-width: fit-content;
+        }
+        
+        .tab-button:hover {
+            color: var(--primary);
+        }
+        
+        .tab-button.active {
+            color: var(--primary);
+            border-bottom-color: var(--accent);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: clamp(0.75rem, 1.5vw, 0.8rem);
+            font-weight: 600;
+            margin: 0 5px 5px 0;
+        }
+        
+        .badge-primary {
+            background-color: #e6f2ff;
+            color: var(--primary);
+        }
+        
+        .badge-success {
+            background-color: #d4edda;
+            color: var(--success);
+        }
+        
+        .badge-accent {
+            background-color: #e0f7f0;
+            color: var(--accent);
+        }
+        
+        .badge-warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        /* Ajustes para dark mode nos badges */
+        .dark-mode .badge-primary {
+            background-color: rgba(0, 86, 166, 0.2);
+            color: #66b3ff;
+        }
+        
+        .dark-mode .badge-success {
+            background-color: rgba(40, 167, 69, 0.2);
+            color: #5cd080;
+        }
+        
+        .dark-mode .badge-accent {
+            background-color: rgba(0, 168, 107, 0.2);
+            color: #5ce0b3;
+        }
+        
+        .dark-mode .badge-warning {
+            background-color: rgba(255, 193, 7, 0.2);
+            color: #ffd966;
+        }
+        
+        .progress-container {
+            margin: 1.5rem 0;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: var(--progress-bg);
+            border-radius: 5px;
+            overflow: hidden;
+            transition: background-color 0.3s;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 5px;
+            width: 0;
+            transition: width 1.5s ease-in-out, background-color 0.3s;
+        }
+        
+        /* Identidade Visual - Responsividade Aprimorada */
+        .brand-visual {
+            margin-top: 2rem;
+        }
+        
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .color-item {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .color-sample {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .color-info {
+            padding: 1rem;
+            background-color: var(--section-bg);
+            font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+            transition: background-color 0.3s;
+        }
+        
+        .logo-variations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+            gap: clamp(1rem, 3vw, 2rem);
+            margin: 1.5rem 0;
+        }
+        
+        .logo-variation {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: clamp(1rem, 3vw, 1.5rem);
+            text-align: center;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .logo-preview {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            width: 100%;
+        }
+        
+        .logo-image-preview {
+            max-height: 80px;
+            max-width: 100%;
+            object-fit: contain;
+        }
+        
+        .logo-horizontal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .logo-compact {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .guidelines-list {
+            background-color: var(--guidelines-bg);
+            padding: clamp(1rem, 3vw, 1.5rem);
+            border-radius: var(--border-radius);
+            margin: 1.5rem 0;
+            transition: background-color 0.3s;
+        }
+        
+        .guideline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            transition: border-color 0.3s;
+        }
+        
+        .guideline-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .guideline-icon {
+            background-color: var(--accent);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .slogan-box {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            border-radius: var(--border-radius);
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+        
+        .slogan-box h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+        }
+        
+        .slogan-box p {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            line-height: 1.4;
+        }
+        
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .material-card {
+            background-color: var(--material-card-bg);
+            border-radius: var(--border-radius);
+            padding: clamp(1rem, 3vw, 1.5rem);
+            text-align: center;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .material-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .material-icon {
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Imagem de fallback para a logo */
+        .logo-fallback {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+        
+        .logo-fallback .letter-s {
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .logo-fallback .text {
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        /* Breakpoints Responsivos Aprimorados */
+        
+        /* Tablets e Telas Médias */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .logo {
+                min-width: 200px;
+            }
+            
+            .logo-img {
+                height: 45px;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .hero h2 {
+                font-size: clamp(1.6rem, 4vw, 2.2rem);
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item::after {
+                left: 18px;
+            }
+            
+            .timeline-item:nth-child(odd)::after,
+            .timeline-item:nth-child(even)::after {
+                left: 18px;
+            }
+        }
+        
+        /* Tablets Pequenos e Celulares Grandes */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: row;
+                gap: 10px;
+            }
+            
+            .logo {
+                flex-direction: row;
+                text-align: left;
+                min-width: auto;
+                flex: 0 1 auto;
+            }
+            
+            .logo-text {
+                display: none;
+            }
+            
+            .logo-img {
+                height: 40px;
+            }
+            
+            .theme-toggle {
+                order: 2;
+                margin-left: auto;
+            }
+            
+            nav {
+                order: 3;
+                width: 100%;
+                margin-top: 10px;
+                justify-content: center;
+            }
+            
+            nav ul {
+                display: none;
+                flex-direction: column;
+                text-align: left;
+                gap: 10px;
+                background: rgba(0, 0, 0, 0.9);
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                padding: 20px;
+                border-radius: 0 0 var(--border-radius) var(--border-radius);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+                z-index: 1000;
+            }
+            
+            .dark-mode nav ul {
+                background: rgba(30, 30, 30, 0.95);
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            nav a {
+                padding: 10px 0;
+                display: block;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            nav a:last-child {
+                border-bottom: none;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                order: 1;
+                margin-left: 10px;
+            }
+            
+            .hero {
+                min-height: 50vh;
+                background-attachment: scroll;
+            }
+            
+            .hero h2 {
+                font-size: clamp(1.4rem, 5vw, 1.8rem);
+            }
+            
+            .hero p {
+                font-size: clamp(0.95rem, 3vw, 1.1rem);
+            }
+            
+            .section {
+                padding: 1.25rem;
+            }
+            
+            .tabs {
+                flex-direction: column;
+                border-bottom: none;
+                gap: 5px;
+            }
+            
+            .tab-button {
+                border-bottom: none;
+                border-left: 3px solid transparent;
+                text-align: left;
+            }
+            
+            .tab-button.active {
+                border-left-color: var(--accent);
+                border-bottom-color: transparent;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+        
+        /* Celulares Pequenos */
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 12px;
+            }
+            
+            .header-content {
+                gap: 5px;
+            }
+            
+            .logo {
+                gap: 10px;
+            }
+            
+            .logo-img {
+                height: 35px;
+            }
+            
+            .theme-toggle {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+            
+            .menu-toggle {
+                width: 40px;
+                height: 40px;
+                font-size: 1.3rem;
+            }
+            
+            .hero {
+                padding: 2.5rem 0;
+                min-height: 40vh;
+            }
+            
+            .hero h2 {
+                font-size: clamp(1.3rem, 5vw, 1.6rem);
+            }
+            
+            .hero p {
+                font-size: clamp(0.9rem, 3vw, 1rem);
+            }
+            
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .section h2 {
+                font-size: clamp(1.2rem, 4vw, 1.4rem);
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .section h2 i {
+                align-self: flex-start;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .card h4 {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .card-icon {
+                align-self: flex-start;
+            }
+            
+            .color-palette,
+            .logo-variations,
+            .materials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .guideline-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .guideline-icon {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+        }
+        
+        /* Telas Muito Pequenas (Celulares antigos) */
+        @media (max-width: 375px) {
+            .container {
+                padding: 0 10px;
+            }
+            
+            .logo {
+                gap: 8px;
+            }
+            
+            .logo-img {
+                height: 30px;
+            }
+            
+            .theme-toggle {
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+            }
+            
+            .menu-toggle {
+                width: 38px;
+                height: 38px;
+                font-size: 1.2rem;
+            }
+            
+            .hero {
+                padding: 2rem 0;
+            }
+            
+            .hero h2 {
+                font-size: 1.4rem;
+            }
+            
+            .section {
+                padding: 1rem;
+            }
+            
+            .cta-button {
+                font-size: 0.95rem;
+                padding: 10px 20px;
+            }
+            
+            .badge {
+                display: block;
+                margin: 0 0 5px 0;
+                width: 100%;
+                text-align: center;
+            }
+        }
+        
+        /* Telas Extra Grandes */
+        @media (min-width: 1600px) {
+            .container {
+                max-width: 1400px;
+            }
+            
+            .hero h2 {
+                font-size: 3.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.4rem;
+            }
+        }
+        
+        /* Ajustes de Impressão */
+        @media print {
+            header {
+                position: static;
+            }
+            
+            .hero {
+                background: none;
+                color: #000;
+                padding: 1rem 0;
+            }
+            
+            .cta-button,
+            .menu-toggle,
+            .theme-toggle {
+                display: none;
+            }
+            
+            .section {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+        }
+        
+        /* Melhorias para Toques em Dispositivos Móveis */
+        @media (hover: none) and (pointer: coarse) {
+            .cta-button:hover,
+            .card:hover,
+            .material-card:hover {
+                transform: none;
+            }
+            
+            nav a:hover {
+                opacity: 1;
+            }
+            
+            .tab-button {
+                min-height: 44px;
+            }
+            
+            button, a {
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo" id="homeLink">
+                <img src="https://i.ibb.co/8wFNWHR/STI-1.png" 
+                     alt="STI - Soluções Técnicas Integradas" 
+                     class="logo-img"
+                     onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 80\"><rect width=\"200\" height=\"80\" fill=\"%230056A6\"/><text x=\"50%\" y=\"50%\" font-family=\"Arial, sans-serif\" font-size=\"20\" font-weight=\"bold\" fill=\"white\" text-anchor=\"middle\" dy=\".3em\"></svg>
+                <div class="logo-text">
+                    <p>STI - Soluções Técnicas Integradas para seu negócio</p>
+                </div>
+            </a>
+            
+            <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+                <i class="fas fa-moon"></i>
+                <i class="fas fa-sun"></i>
+            </button>
+            
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="#" class="nav-link active" data-section="home">Início</a></li>
+                    <li><a href="#" class="nav-link" data-section="company">Empresa</a></li>
+                    <li><a href="#" class="nav-link" data-section="services">Serviços</a></li>
+                    <li><a href="#" class="nav-link" data-section="brand">Identidade Visual</a></li>
+                    <li><a href="#" class="nav-link" data-section="financial">Financeiro</a></li>
+                    <li><a href="#" class="nav-link" data-section="timeline">Cronograma</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>STI – Soluções Técnicas Integradas</h2>
+            <p>Especializada em tecnologia, redes, segurança eletrônica e infraestrutura de TI. Atuamos nos segmentos corporativo e residencial com qualidade técnica e foco total na satisfação do cliente.</p>
+            <a href="#" class="cta-button" id="contactBtn">Fale Conosco</a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Home Section -->
+        <section id="home" class="section active-section">
+            <h2><i class="fas fa-home"></i> Visão Geral da Empresa</h2>
+            <p>A <strong>STI – Soluções Técnicas Integradas</strong> é uma empresa especializada em tecnologia, redes, segurança eletrônica e infraestrutura de TI. Atuamos no segmento corporativo e residencial com foco em:</p>
+            
+            <div class="grid">
+                <div class="card">
+                    <h4><div class="card-icon"><i class="fas fa-network-wired"></i></div> Redes & Infraestrutura</h4>
+                    <p>Instalação de redes estruturadas, montagem de racks, patch panels, pontos de rede e manutenção de infraestrutura existente.</p>
+                </div>
+                <div class="card">
+                    <h4><div class="card-icon"><i class="fas fa-shield-alt"></i></div> Segurança Eletrônica</h4>
+                    <p>Instalação de CFTV, alarmes, sensores e sistemas de controle de acesso com monitoramento 24/7.</p>
+                </div>
+                <div class="card">
+                    <h4><div class="card-icon"><i class="fas fa-laptop-code"></i></div> Suporte de TI</h4>
+                    <p>Suporte remoto e presencial, manutenção de computadores, formatação, montagem e consultoria em tecnologia.</p>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <h3>Nosso Diferencial</h3>
+                <p>Qualidade técnica, trabalho estruturado, atendimento rápido e foco total na satisfação do cliente. Buscamos estabelecer uma empresa sólida de tecnologia e infraestrutura, com operação profissional e gestão organizada.</p>
+            </div>
+            
+            <h3>Estrutura Societária</h3>
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>Aglaessio Reis</span>
+                    <span>50%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 50%"></div>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>Julio Cesar</span>
+                    <span>50%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 50%"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Company Section -->
+        <section id="company" class="section">
+            <h2><i class="fas fa-building"></i> Identificação da Empresa</h2>
+            
+            <div class="tabs">
+                <button class="tab-button active" data-tab="data">Dados do MEI</button>
+                <button class="tab-button" data-tab="partners">Sócios Operacionais</button>
+                <button class="tab-button" data-tab="cnae">CNAEs Registrados</button>
+            </div>
+            
+            <div class="tab-content active" id="data">
+                <h3>Dados Cadastrais</h3>
+                <table>
+                    <tr>
+                        <th>Titular:</th>
+                        <td>Rossi Neves Leite</td>
+                    </tr>
+                    <tr>
+                        <th>CNPJ:</th>
+                        <td>63.897.187/0001-98</td>
+                    </tr>
+                    <tr>
+                        <th>Abertura:</th>
+                        <td>02/12/2025</td>
+                    </tr>
+                    <tr>
+                        <th>Capital Social:</th>
+                        <td>R$ 5.000,00</td>
+                    </tr>
+                    <tr>
+                        <th>Endereço Comercial:</th>
+                        <td>Rua Ayrton Turra, 153, apto 304 – Bloco A – Cajuru, Curitiba/PR</td>
+                    </tr>
+                    <tr>
+                        <th>CPF da Titular:</th>
+                        <td>968.682.522-34</td>
+                    </tr>
+                </table>
+                
+                <div class="highlight">
+                    <h3>Estrutura Jurídica</h3>
+                    <p><strong>Natureza atual:</strong> MEI (Microempreendedor Individual)</p>
+                    <p><strong>Futuro previsto:</strong> Transição para ME-LTDA quando houver exigência financeira, com divisão societária oficial 50/50.</p>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="partners">
+                <h3>Sócios Operacionais</h3>
+                <p>Embora o MEI tenha apenas a titular formal, o contrato estabelece dois sócios operacionais:</p>
+                
+                <div class="grid">
+                    <div class="card">
+                        <h4><div class="card-icon"><i class="fas fa-user"></i></div> Aglaessio Reis</h4>
+                        <p><strong>Participação:</strong> 50%</p>
+                        <p><strong>Função:</strong> Administração, gestão financeira, compras, propostas comerciais e atendimento técnico.</p>
+                    </div>
+                    <div class="card">
+                        <h4><div class="card-icon"><i class="fas fa-user"></i></div> Julio Cesar</h4>
+                        <p><strong>Participação:</strong> 50%</p>
+                        <p><strong>Função:</strong> Administração, gestão financeira, compras, propostas comerciais e atendimento técnico.</p>
+                    </div>
+                </div>
+                
+                <h3>Fundo da Empresa</h3>
+                <ul>
+                    <li>10% descontado de cada sócio mensalmente</li>
+                    <li>+10% adicional de Aglaessio por 12 meses</li>
+                    <li>Finalidade: Equipamentos, marketing, capital de giro, expandir a estrutura e reserva financeira</li>
+                    <li>Os 10% extras de Aglaessio viram investimento oficial contabilizado</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="cnae">
+                <h3>CNAEs Registrados</h3>
+                
+                <h4>CNAE Principal</h4>
+                <p><span class="badge badge-primary">9511-8/00</span> Reparação e manutenção de computadores e periféricos</p>
+                
+                <h4>CNAEs Secundários</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 1rem;">
+                    <span class="badge badge-success">Manutenção e reparo eletrônico</span>
+                    <span class="badge badge-success">Comércio de equipamentos de informática</span>
+                    <span class="badge badge-success">Instalação de redes e telecom</span>
+                    <span class="badge badge-success">Serviços elétricos</span>
+                    <span class="badge badge-success">Organização de eventos</span>
+                    <span class="badge badge-success">Venda e instalação de sistemas de segurança</span>
+                    <span class="badge badge-success">Telecomunicações diversas</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="section">
+            <h2><i class="fas fa-concierge-bell"></i> Produtos e Serviços</h2>
+            
+            <div class="grid">
+                <div class="card">
+                    <h4><div class="card-icon"><i class="fas fa-network-wired"></i></div> Redes & Infraestrutura</h4>
+                    <ul>
+                        <li>Instalação de redes estruturadas (cabeamento Cat5e, Cat6 etc.)</li>
+                        <li>Montagem de racks, patch panels, pontos de rede</li>
+                        <li>Manutenção e organização de infraestrutura existente</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4><div class="card-icon"><i class="fas fa-shield-alt"></i></div> Segurança Eletrônica</h4>
+                    <ul>
+                        <li>Instalação de câmeras CFTV</li>
+                        <li>Monitoramento 24/7</li>
+                        <li>Alarmes e sensores</li>
+                        <li>Acesso inteligente (fechaduras digitais, biometria, TAGs)</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4><div class="card-icon"><i class="fas fa-laptop"></i></div> TI – Suporte e Manutenção</h4>
+                    <ul>
+                        <li>Formatação e montagem de computadores</li>
+                        <li>Suporte remoto e presencial</li>
+                        <li>Manutenção preventiva e corretiva</li>
+                        <li>Consultoria em tecnologia</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4><div class="card-icon"><i class="fas fa-bolt"></i></div> Elétrica Técnica</h4>
+                    <ul>
+                        <li>Instalação de tomadas, quadros, disjuntores</li>
+                        <li>Adequações elétricas para redes e equipamentos</li>
+                        <li>Iluminação técnica</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4><div class="card-icon"><i class="fas fa-shopping-cart"></i></div> Vendas de Equipamentos</h4>
+                    <ul>
+                        <li>Roteadores, switches e equipamentos de rede</li>
+                        <li>Equipamentos de CFTV e segurança</li>
+                        <li>Peças de informática</li>
+                        <li>Materiais elétricos e de rede</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Brand Identity Section -->
+        <section id="brand" class="section">
+            <h2><i class="fas fa-palette"></i> Identidade Visual da Marca</h2>
+            
+            <div class="highlight">
+                <h3>Conceito do Logotipo Atualizado</h3>
+                <p>Baseado na logo <strong>STI-1.png</strong>, nosso logotipo apresenta um design moderno e profissional que comunica integração técnica e confiança. O design utiliza elementos visuais que representam a união entre tecnologia e soluções integradas, com tipografia limpa e elementos gráficos que simbolizam conexão e precisão.</p>
+            </div>
+            
+            <h3>Paleta de Cores Principal</h3>
+            <div class="color-palette">
+                <div class="color-item">
+                    <div class="color-sample" style="background-color: #0056A6;">
+                        Azul Técnico
+                    </div>
+                    <div class="color-info">
+                        <strong>#0056A6</strong><br>
+                        Elementos principais, títulos
+                    </div>
+                </div>
+                <div class="color-item">
+                    <div class="color-sample" style="background-color: #4A4A4A; color: white;">
+                        Cinza Profissional
+                    </div>
+                    <div class="color-info">
+                        <strong>#4A4A4A</strong><br>
+                        Texto secundário, elementos de apoio
+                    </div>
+                </div>
+                <div class="color-item">
+                    <div class="color-sample" style="background-color: #00A86B; color: white;">
+                        Verde de Destaque
+                    </div>
+                    <div class="color-info">
+                        <strong>#00A86B</strong><br>
+                        Elementos de ação, ícones especiais
+                    </div>
+                </div>
+                <div class="color-item">
+                    <div class="color-sample" style="background-color: #FFFFFF; color: #4A4A4A; border: 1px solid #ddd;">
+                        Branco
+                    </div>
+                    <div class="color-info">
+                        <strong>#FFFFFF</strong><br>
+                        Fundo, textos sobre cores escuras
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Variações do Logotipo</h3>
+            <div class="logo-variations">
+                <div class="logo-variation">
+                    <div class="logo-preview">
+                        <img src="https://i.ibb.co/8wFNWHR/STI-1.png" 
+                             alt="STI - Logo Principal" 
+                             class="logo-image-preview"
+                             onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<div class=\"logo-fallback\"><div class=\"letter-s\">S</div><div class=\"text\">Soluções Técnicas<br>Integradas</div></div>
+                    </div>
+                    <h4>Versão Principal</h4>
+                    <p>Logotipo completo da STI - Soluções Técnicas Integradas</p>
+                </div>
+                
+                <div class="logo-variation">
+                    <div class="logo-preview">
+                        <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary);">STI</div>
+                    </div>
+                    <h4>Versão Compacta</h4>
+                    <p>Sigla "STI" para aplicações com espaço limitado</p>
+                </div>
+                
+                <div class="logo-variation">
+                    <div class="logo-preview">
+                        <div style="font-size: 3rem; font-weight: 700; color: var(--primary);">S</div>
+                    </div>
+                    <h4>Símbolo Simplificado</h4>
+                    <p>Letra "S" para favicon, ícone de aplicativo, e espaços muito reduzidos</p>
+                </div>
+            </div>
+            
+            <h3>Diretrizes de Uso da Logo STI</h3>
+            <div class="guidelines-list">
+                <div class="guideline-item">
+                    <div class="guideline-icon"><i class="fas fa-ruler"></i></div>
+                    <div>
+                        <strong>Espaçamento mínimo</strong>: Manter área de respiro equivalente à altura do símbolo ao redor do logotipo
+                    </div>
+                </div>
+                
+                <div class="guideline-item">
+                    <div class="guideline-icon"><i class="fas fa-palette"></i></div>
+                    <div>
+                        <strong>Versões cromáticas</strong>: 
+                        <ul style="margin-top: 0.5rem;">
+                            <li>Versão colorida original (como no arquivo STI-1.png)</li>
+                            <li>Versão monocromática (preto/branco para fotocópias)</li>
+                            <li>Versão negativa (branco sobre fundo colorido)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="guideline-item">
+                    <div class="guideline-icon"><i class="fas fa-ban"></i></div>
+                    <div>
+                        <strong>Não fazer</strong>:
+                        <ul style="margin-top: 0.5rem;">
+                            <li>Distorcer proporções do logotipo</li>
+                            <li>Alterar cores do logotipo original</li>
+                            <li>Modificar elementos individuais da logo</li>
+                            <li>Usar fundos que comprometam a legibilidade</li>
+                            <li>Redimensionar desproporcionalmente</li>
+                            <li>Isolar partes do símbolo gráfico</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="guideline-item">
+                    <div class="guideline-icon"><i class="fas fa-check-circle"></i></div>
+                    <div>
+                        <strong>Melhores práticas</strong>:
+                        <ul style="margin-top: 0.5rem;">
+                            <li>Utilizar o arquivo original sempre que possível</li>
+                            <li>Manter o fundo transparente para máxima versatilidade</li>
+                            <li>Garantir contraste adequado com o fundo</li>
+                            <li>Usar tamanhos mínimos para manter legibilidade</li>
+                            <li>Preservar a integridade do símbolo e tipografia</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slogan-box">
+                <h3>Slogan Institucional</h3>
+                <p style="font-size: 1.5rem; font-weight: 600;">"STI – Soluções Técnicas Integradas para seu negócio"</p>
+                <p style="margin-top: 0.5rem; opacity: 0.9;">Utilizar em: material publicitário, rodapé do site, assinatura de e-mails corporativos e apresentações institucionais</p>
+            </div>
+            
+            <h3>Aplicações Práticas</h3>
+            <div class="materials-grid">
+                <div class="material-card">
+                    <div class="material-icon"><i class="fas fa-id-card"></i></div>
+                    <h4>Cartão de Visita</h4>
+                    <p>Logo no canto superior esquerdo, informações de contato claras</p>
+                </div>
+                
+                <div class="material-card">
+                    <div class="material-icon"><i class="fas fa-file-alt"></i></div>
+                    <h4>Papel Timbrado</h4>
+                    <p>Cabeçalho com logo, rodapé com informações da empresa</p>
+                </div>
+                
+                <div class="material-card">
+                    <div class="material-icon"><i class="fas fa-envelope"></i></div>
+                    <h4>Assinatura de E-mail</h4>
+                    <p>Logo pequena, nome, cargo e contatos</p>
+                </div>
+                
+                <div class="material-card">
+                    <div class="material-icon"><i class="fas fa-desktop"></i></div>
+                    <h4>Site e Redes Sociais</h4>
+                    <p>Logo no cabeçalho, favicon com "S" simplificado</p>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <h3>Comunicação da Marca</h3>
+                <p>Esta identidade visual baseada na logo <strong>STI-1.png</strong> comunica <strong>confiança, profissionalismo e integração técnica</strong>. O design moderno e profissional garante reconhecimento imediato da marca, enquanto transmite seriedade e competência técnica nos serviços oferecidos. A combinação de elementos gráficos e tipografia limpa reforça o posicionamento da empresa como especialista em soluções técnicas integradas.</p>
+            </div>
+        </section>
+
+        <!-- Financial Section -->
+        <section id="financial" class="section">
+            <h2><i class="fas fa-chart-line"></i> Plano Financeiro e Operacional</h2>
+            
+            <div class="tabs">
+                <button class="tab-button active" data-tab="revenue">Receitas</button>
+                <button class="tab-button" data-tab="expenses">Despesas</button>
+                <button class="tab-button" data-tab="indicators">Indicadores</button>
+                <button class="tab-button" data-tab="rules">Regras Operacionais</button>
+            </div>
+            
+            <div class="tab-content active" id="revenue">
+                <h3>Fontes de Receita</h3>
+                <ul>
+                    <li><strong>Serviços técnicos</strong> → maior parte da renda</li>
+                    <li><strong>Vendas de equipamentos</strong> → margem sobre produtos</li>
+                    <li><strong>Contratos mensais para empresas</strong> → manutenção preventiva e suporte</li>
+                </ul>
+                
+                <h3>Objetivos Financeiros</h3>
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Carteira de clientes empresariais fixos</span>
+                        <span>0/20</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 15%"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Aumento do faturamento mensal</span>
+                        <span>R$ 5.000/R$ 15.000</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 33%"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Formalização ME-LTDA</span>
+                        <span>12-18 meses</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 10%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="expenses">
+                <h3>Despesas Fixas Mensais</h3>
+                <table>
+                    <tr>
+                        <th>Item</th>
+                        <th>Valor Estimado</th>
+                    </tr>
+                    <tr>
+                        <td>Combustível</td>
+                        <td>R$ 600,00</td>
+                    </tr>
+                    <tr>
+                        <td>Contabilidade MEI</td>
+                        <td>R$ 150,00</td>
+                    </tr>
+                    <tr>
+                        <td>Ferramentas e equipamentos</td>
+                        <td>R$ 300,00</td>
+                    </tr>
+                    <tr>
+                        <td>Marketing</td>
+                        <td>R$ 200,00</td>
+                    </tr>
+                    <tr>
+                        <td>Impostos DAS MEI</td>
+                        <td>R$ 70,00</td>
+                    </tr>
+                    <tr>
+                        <td>Assinaturas (sistemas, softwares, nuvem)</td>
+                        <td>R$ 150,00</td>
+                    </tr>
+                    <tr>
+                        <td>Material de instalação</td>
+                        <td>R$ 400,00</td>
+                    </tr>
+                    <tr>
+                        <th>Total</th>
+                        <th>R$ 1.870,00</th>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="tab-content" id="indicators">
+                <h3>Indicadores-chave (KPIs)</h3>
+                <div class="grid">
+                    <div class="card">
+                        <h4><div class="card-icon"><i class="fas fa-ticket-alt"></i></div> Ticket Médio Mensal</h4>
+                        <p>Meta: R$ 800,00 por serviço</p>
+                        <p>Atual: R$ 650,00</p>
+                    </div>
+                    <div class="card">
+                        <h4><div class="card-icon"><i class="fas fa-users"></i></div> Crescimento de Clientes</h4>
+                        <p>Meta: +5 clientes/mês</p>
+                        <p>Atual: +3 clientes/mês</p>
+                    </div>
+                    <div class="card">
+                        <h4><div class="card-icon"><i class="fas fa-percentage"></i></div> Margem Líquida</h4>
+                        <p>Meta: 25–40%</p>
+                        <p>Atual: 22%</p>
+                    </div>
+                    <div class="card">
+                        <h4><div class="card-icon"><i class="fas fa-piggy-bank"></i></div> Fundo da Empresa</h4>
+                        <p>Meta: 20% do faturamento</p>
+                        <p>Atual: 15% do faturamento</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="rules">
+                <h3>Manual Interno - Regras Operacionais</h3>
+                
+                <h4>Atendimento</h4>
+                <ul>
+                    <li>Resposta ao cliente em até 10 minutos</li>
+                    <li>Orçamento formalizado por PDF ou WhatsApp automático</li>
+                    <li>Agendamento com confirmação 24h antes</li>
+                </ul>
+                
+                h4>Execução</h4>
+                <ul>
+                    <li>Check-list de instalação obrigatório</li>
+                    <li>Fotos antes e depois do serviço</li>
+                    <li>Materiais utilizados registrados no sistema</li>
+                </ul>
+                
+                <h4>Financeiro</h4>
+                <ul>
+                    <li>Movimentar apenas pela conta PJ</li>
+                    <li>Registrar entradas e saídas diariamente</li>
+                    <li>Enviar relatório semanal entre os sócios</li>
+                </ul>
+                
+                <h4>Garantia</h4>
+                <ul>
+                    <li>90 dias para serviços realizados</li>
+                    <li>1 ano para equipamentos (conforme fornecedor)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Timeline Section -->
+        <section id="timeline" class="section">
+            <h2><i class="fas fa-project-diagram"></i> Cronograma da Empresa</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Fase 1 – Operacionalização (0–30 dias)</h3>
+                        <ul>
+                            <li>Criar conta PJ</li>
+                            <li>Criar identidade visual</li>
+                            <li>Criar catálogo de serviços</li>
+                            <li>Criar automações WhatsApp</li>
+                            <li>Separar ferramentas essenciais</li>
+                            <li>Landing page simples</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Fase 2 – Crescimento (30–180 dias)</h3>
+                        <ul>
+                            <li>Começar campanhas pagas</li>
+                            <li>Buscar contratos com empresas</li>
+                            <li>Comprar equipamentos novos</li>
+                            <li>Formalizar processos internos</li>
+                            <li>Expandir carteira de clientes</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Fase 3 – Expansão (6–18 meses)</h3>
+                        <ul>
+                            <li>Migrar para ME-LTDA</li>
+                            <li>Contratar ajudantes/auxiliares</li>
+                            <li>Abrir escritório físico</li>
+                            <li>Aumentar estoque de equipamentos</li>
+                            <li>Expandir para região metropolitana</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <h3>Status Atual</h3>
+                <p>A empresa encontra-se na <strong>Fase 1 – Operacionalização</strong>, com a criação da identidade visual, estruturação dos processos internos e início das operações comerciais. O foco atual é na construção da carteira inicial de clientes e organização dos fluxos operacionais.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="https://i.ibb.co/8wFNWHR/STI-1.png" 
+                         alt="STI - Soluções Técnicas Integradas" 
+                         style="height: 50px; margin-bottom: 1rem; filter: brightness(0) invert(1);"
+                         onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 80\"><rect width=\"200\" height=\"80\" fill=\"%234A4A4A\"/><text x=\"50%\" y=\"50%\" font-family=\"Arial, sans-serif\" font-size=\"20\" font-weight=\"bold\" fill=\"white\" text-anchor=\"middle\" dy=\".3em\"></svg>
+                    <p><strong>STI – Soluções Técnicas Integradas para seu negócio</strong></p>
+                    <p>Especializada em tecnologia, redes, segurança eletrônica e infraestrutura de TI.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contato</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Rua Ayrton Turra, 153, apto 304 – Bloco A – Cajuru, Curitiba/PR</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>(41) 99999-9999</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>contato@sti-solucoes.com.br</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Áreas de Atuação</h3>
+                    <p>Redes & Infraestrutura</p>
+                    <p>Segurança Eletrônica</p>
+                    <p>Suporte de TI</p>
+                    <p>Elétrica Técnica</p>
+                    <p>Vendas de Equipamentos</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 STI – Soluções Técnicas Integradas. Todos os direitos reservados.</p>
+                <p>CNPJ: 63.897.187/0001-98 | Identidade Visual Registrada</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                this.querySelector('i').classList.toggle('fa-bars');
+                this.querySelector('i').classList.toggle('fa-times');
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    navMenu.classList.remove('active');
+                    menuToggle.querySelector('i').classList.remove('fa-times');
+                    menuToggle.querySelector('i').classList.add('fa-bars');
+                }
+            });
+            
+            // Navigation between sections
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.section');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Update active nav link
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Hide all sections
+                    sections.forEach(section => {
+                        section.classList.remove('active-section');
+                    });
+                    
+                    // Show selected section
+                    const sectionId = this.getAttribute('data-section');
+                    document.getElementById(sectionId).classList.add('active-section');
+                    
+                    // Close mobile menu if open
+                    if (window.innerWidth <= 768) {
+                        navMenu.classList.remove('active');
+                        menuToggle.querySelector('i').classList.remove('fa-times');
+                        menuToggle.querySelector('i').classList.add('fa-bars');
+                    }
+                    
+                    // Scroll to top of section smoothly
+                    setTimeout(() => {
+                        document.getElementById(sectionId).scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }, 100);
+                });
+            });
+            
+            // Home link functionality
+            document.getElementById('homeLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Update active nav link
+                navLinks.forEach(l => l.classList.remove('active'));
+                document.querySelector('[data-section="home"]').classList.add('active');
+                
+                // Hide all sections
+                sections.forEach(section => {
+                    section.classList.remove('active-section');
+                });
+                
+                // Show home section
+                document.getElementById('home').classList.add('active-section');
+                
+                // Close mobile menu if open
+                if (window.innerWidth <= 768) {
+                    navMenu.classList.remove('active');
+                    menuToggle.querySelector('i').classList.remove('fa-times');
+                    menuToggle.querySelector('i').classList.add('fa-bars');
+                }
+                
+                // Scroll to top smoothly
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            // Tab functionality
+            const tabButtons = document.querySelectorAll('.tab-button');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    const tabContent = document.getElementById(tabId);
+                    const parentSection = this.closest('.section');
+                    
+                    // Update active tab button
+                    parentSection.querySelectorAll('.tab-button').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Hide all tab contents in this section
+                    parentSection.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Show selected tab content
+                    tabContent.classList.add('active');
+                });
+            });
+            
+            // Contact button functionality
+            document.getElementById('contactBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Entre em contato conosco pelo WhatsApp: (41) 99999-9999\nOu pelo email: contato@sti-solucoes.com.br');
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 768) {
+                    if (!event.target.closest('nav') && !event.target.closest('#menuToggle')) {
+                        navMenu.classList.remove('active');
+                        menuToggle.querySelector('i').classList.remove('fa-times');
+                        menuToggle.querySelector('i').classList.add('fa-bars');
+                    }
+                }
+            });
+            
+            // Tema Claro/Escuro
+            const themeToggle = document.getElementById('themeToggle');
+            const body = document.body;
+            
+            // Verificar preferência salva
+            const savedTheme = localStorage.getItem('sti-theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                body.classList.add('dark-mode');
+            }
+            
+            // Alternar tema
+            themeToggle.addEventListener('click', function() {
+                body.classList.toggle('dark-mode');
+                
+                // Salvar preferência
+                if (body.classList.contains('dark-mode')) {
+                    localStorage.setItem('sti-theme', 'dark');
+                } else {
+                    localStorage.setItem('sti-theme', 'light');
+                }
+                
+                // Animação do botão
+                this.style.transform = 'rotate(180deg)';
+                setTimeout(() => {
+                    this.style.transform = 'rotate(0deg)';
+                }, 300);
+            });
+            
+            // Initialize mobile menu
+            if (window.innerWidth <= 768) {
+                navMenu.classList.remove('active');
+            }
+            
+            // Simulate some progress updates
+            simulateProgress();
+            
+            // Add touch support for mobile devices
+            document.addEventListener('touchstart', function() {}, {passive: true});
+        });
+        
+        // Function to simulate progress updates
+        function simulateProgress() {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            
+            // Randomize progress for demo purposes
+            progressBars.forEach(bar => {
+                const currentWidth = parseInt(bar.style.width);
+                if (currentWidth < 100) {
+                    // Animate to current width
+                    bar.style.transition = 'width 1.5s ease-in-out';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
